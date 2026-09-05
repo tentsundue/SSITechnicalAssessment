@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace SSITechnicalAssessment.Models.ClaimModel
 {
-    public record Claim(
+    public record Claim
+    (
         string PatientAccountNum,
         decimal ClaimChargeAmt,
         Facility Facility,
-        string SignatureIndicator,
-        string ParticipationCode,
-        string BenefitsAsmntCertIndicator,
-        string ReleaseInfoIndicator
+        char SignatureIndicator,
+        char ParticipationCode,
+        char BenefitsAsmntCertIndicator,
+        char ReleaseInfoIndicator,
+        string? CLM03 = null,
+        string? CLM04 = null
     );
 }

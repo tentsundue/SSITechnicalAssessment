@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using SSITechnicalAssessment.EDIParser;
+using SSITechnicalAssessment.Models.ClaimModel;
+using SSITechnicalAssessment.Output;
 
 namespace SSITechnicalAssessment
 {
@@ -10,11 +13,13 @@ namespace SSITechnicalAssessment
         {
             string[] paths = {"EDI837Files", "SampleProfessional.837" };
             string full_path = Path.Combine(paths);
-            Console.WriteLine(full_path);
-            Console.ReadLine();
-       
+  
             EDI837Parser parser = new EDI837Parser();
-            parser.Parse(full_path);
+            List<Claim> retrievedClaims = parser.ParseClaims(full_path);
+
+            OutputWriter outputwriter = new OutputWriter();
+            OutputWriter.Display(retrievedClaims);
+
         }
     }
 }

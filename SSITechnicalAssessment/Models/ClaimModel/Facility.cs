@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace SSITechnicalAssessment.Models.ClaimModel
 {
-    public record Facility(
-                    string FacilityTypeCode, 
-                    string FacilityCodeQual, 
-                    string ClaimFreqCode);
+    public record Facility
+    (
+        string FacilityTypeCode, 
+        char FacilityCodeQual,
+        string ClaimFreqCode
+    );
 }
