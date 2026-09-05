@@ -21,10 +21,10 @@ namespace SSITechnicalAssessment
 
             Console.WriteLine($"Parsing file: {path}\n");
 
-            EDI837Parser parser = new EDI837Parser();
-            List<Claim> retrievedClaims = parser.ParseClaims(path);
+            List<Claim> retrievedClaims = EDI837Parser.ParseFile(path);
+            decimal totalChargeAmtAllClaims = EDI837Parser.GetTotalChargeAmtAllClaims(retrievedClaims); 
 
-            OutputWriter.Display(retrievedClaims);
+            OutputWriter.Display(retrievedClaims, totalChargeAmtAllClaims);
 
         }
     }
