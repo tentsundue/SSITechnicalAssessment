@@ -9,13 +9,16 @@ namespace SSITechnicalAssessment.Output
 {
     class OutputWriter
     {
-        const string ClaimInfoDivider   = "-------------------------------------------------------";
+        const string CategoryDivider    = "==================================================================";
+        const string ClaimInfoDivider   = "----------------------------------------------------------";
      
         public OutputWriter() { }
 
         public static void Display(List<Claim> claims)
         {
+            decimal allChargeAmounts = 0;
             int claimCount = 1;
+            Console.WriteLine($"{CategoryDivider}\n");
             foreach (Claim claim in claims)
             {
                 Console.WriteLine($"CLAIM {claimCount++}:");
@@ -33,8 +36,14 @@ namespace SSITechnicalAssessment.Output
                 Console.WriteLine($"Benefits Assignment Certification Indicator: {claim.BenefitsAsmntCertIndicator}");
                 Console.WriteLine($"Release of Information Indicator: {claim.ReleaseInfoIndicator}");
 
+                allChargeAmounts += claim.ClaimChargeAmt;
+
                 Console.WriteLine($"{ClaimInfoDivider}\n");
             }
+
+            Console.WriteLine($"{CategoryDivider}\n");
+            Console.WriteLine($"Total Claim Charge Amount Across All Claims: ${allChargeAmounts}");
+            Console.WriteLine($"\n{CategoryDivider}");
         }
     }
 }
