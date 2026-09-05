@@ -15,7 +15,7 @@ namespace SSITechnicalAssessment.EDIParser
         
         public EDI837Parser() { }
 
-        private Claim _BuildClaim(string[] elements)
+        private static Claim BuildClaim(string[] elements)
         {
             string patientAccountNum = elements[1];
             decimal claimChargeAmt = decimal.Parse(elements[2]);
@@ -63,7 +63,7 @@ namespace SSITechnicalAssessment.EDIParser
                 {
                     try
                     {
-                        Claim claim = _BuildClaim(elements);
+                        Claim claim = BuildClaim(elements);
                         claims.Add(claim);
                     }
                     catch (Exception e)
