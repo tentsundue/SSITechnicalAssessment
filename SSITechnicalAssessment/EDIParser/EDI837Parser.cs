@@ -14,7 +14,36 @@ namespace SSITechnicalAssessment.EDIParser
         Dictionary<string, List<string>> segmentGroups = new Dictionary<string, List<string>>();
         
         public EDI837Parser() { }
+        
+        public static List<Claim> ParseSegments(string textContent)
+        {
+            List<Claim> claims = new List<Claim>();
 
+            textContent = textContent.Replace("\r", "").Replace("\n", "");
+            string[] segments = textContent.Split(SegmentDelimiter, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string segment in segments)
+            {
+                string[] elements = segment.Split(ElementDelimiter);
+                string segmentID = elements[0];
+
+                bool isCLM = string.Equals(segmentID, "CLM");
+                if (isCLM)
+                {
+                    try
+                    {
+                        Claim claim = BuildClaim(elements);
+                        claims.Add(claim);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Error reading claim segment:\n{e}");
+                        continue;
+                    }
+                }
+            }
+
+            return claims;
+        }
         private static Claim BuildClaim(string[] elements)
         {
             string patientAccountNum = elements[1];
@@ -39,45 +68,27 @@ namespace SSITechnicalAssessment.EDIParser
             return claim;
         }
 
-        public List<Claim> ParseClaims(string path)
+        public static decimal GetTotalChargeAmtAllClaims(List<Claim> claims)
         {
-            List<Claim> claims = new();
+            decimal total = 0;
+            foreach (Claim claim in claims)
+            {
+                total += claim.ClaimChargeAmt;
+            }
 
+            return total;
+        }
+
+        public static List<Claim> ParseFile(string path)
+        {
             if (!File.Exists(path))
             {
-                throw new FileNotFoundException($"EDI file not found: {path}", path);
+                throw new FileNotFoundException($"EDI file not found: {path}");
             }
 
             string textContent = File.ReadAllText(path);
-            textContent = textContent.Replace("\r", "").Replace("\n", "");
 
-            string[] segments = textContent.Split(SegmentDelimiter, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string segment in segments)
-            {
-                string[] elements = segment.Split(ElementDelimiter);
-                string segmentID = elements[0];
-
-                bool isCLM = string.Equals(segmentID, "CLM");
-                if (isCLM)
-                {
-                    try
-                    {
-                        Claim claim = BuildClaim(elements);
-                        claims.Add(claim);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"Error reading claim segment:\n{e}");
-                        continue;
-                    }
-                }
-
-                
-                
-            }
-
-            return claims;
+            return ParseSegments(textContent);
         }
     }
 }
