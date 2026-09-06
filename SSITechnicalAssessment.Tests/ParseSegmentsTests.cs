@@ -1,8 +1,8 @@
 using System;
 using Xunit;
-using SSITechnicalAssessment.EDIParser;
+using SSITechnicalAssessment.Shared.Services;
 using System.Collections.Generic;
-using SSITechnicalAssessment.Models.ClaimModel;
+using SSITechnicalAssessment.Shared.Models.ClaimModel;
 using System.IO;
 
 namespace SSITechnicalAssessment.Tests
@@ -34,9 +34,9 @@ namespace SSITechnicalAssessment.Tests
         [Fact]
         public void ParseSegments_NoSegments_ShouldReturnNoClaims()
         {
-            string CLMSegment = "";
+            string EmptyCLMSegment = "";
 
-            List<Claim> claims = EDI837Parser.ParseSegments(CLMSegment);
+            List<Claim> claims = EDI837Parser.ParseSegments(EmptyCLMSegment);
             Assert.Empty(claims);
         }
 
@@ -57,24 +57,24 @@ namespace SSITechnicalAssessment.Tests
         [Fact]
         public void ParseSegments_MultipleClaimSegments_ShouldReturnCombinedChargeAmount()
         {
-            string CLMSegment = "CLM*XYZ123000456*25***01:B:1*N*C*Y*Y~CLM*XYZ123000567*10***01:B:1*N*C*Y*Y~";
+            string CLMSegments = "CLM*XYZ123000456*25***01:B:1*N*C*Y*Y~CLM*XYZ123000567*10***01:B:1*N*C*Y*Y~";
 
-            List<Claim> claims = EDI837Parser.ParseSegments(CLMSegment);
+            List<Claim> claims = EDI837Parser.ParseSegments(CLMSegments);
             Claim claim1 = claims[0];
             Claim claim2 = claims[1];
 
             decimal total = EDI837Parser.GetTotalChargeAmtAllClaims(claims);
             decimal expected = 35;
-            Assert.Equal(total, expected);
+            Assert.Equal(expected, total);
 
         }
 
         [Fact]
         public void ParseSegments_MultipleSegmentIdentifiers_ShouldIgnoreNonClaimSegments()
         {
-            string NonCLMSegment = "GS*HC*SSIGROUP*SSIGROUP*20220120*1544*1*X*005010X222A1~CLM*XYZ123000456*25***01:B:1*N*C*Y*Y~";
+            string MultipleCLMSegmentIDs = "GS*HC*SSIGROUP*SSIGROUP*20220120*1544*1*X*005010X222A1~CLM*XYZ123000456*25***01:B:1*N*C*Y*Y~";
 
-            List<Claim> claims = EDI837Parser.ParseSegments(NonCLMSegment);
+            List<Claim> claims = EDI837Parser.ParseSegments(MultipleCLMSegmentIDs);
             Assert.Single(claims);
 
             Claim claim = claims[0];

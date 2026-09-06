@@ -1,4 +1,4 @@
-﻿using SSITechnicalAssessment.Models.ClaimModel;
+﻿using SSITechnicalAssessment.Shared.Models.ClaimModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +16,12 @@ namespace SSITechnicalAssessment.Output
 
         public static void Display(List<Claim> claims, decimal totalChargeAmtAllClaims)
         {
-            int claimCount = 1;
             Console.WriteLine($"{CategoryDivider}\n");
             foreach (Claim claim in claims)
             {
-                Console.WriteLine($"CLAIM {claimCount++}:");
+                Console.WriteLine($"Claim for patient: {claim.PatientAccountNum}");
                 Console.WriteLine(ClaimInfoDivider);
-                Console.WriteLine($"Patient Account: {claim.PatientAccountNum}\t| Claim Charge Amount: ${claim.ClaimChargeAmt}");
+                Console.WriteLine($"Claim Charge Amount: ${claim.ClaimChargeAmt}");
                 Console.WriteLine();
 
                 Console.WriteLine($"Facility Type Code: {claim.Facility.FacilityTypeCode}");

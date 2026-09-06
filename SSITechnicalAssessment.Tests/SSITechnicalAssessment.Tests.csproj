@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SSITechnicalAssessment\SSITechnicalAssessment.csproj" />
+    <ProjectReference Include="..\SSITechnicalAssessment.Shared\SSITechnicalAssessment.Shared.csproj" />
   </ItemGroup>
 
 </Project>

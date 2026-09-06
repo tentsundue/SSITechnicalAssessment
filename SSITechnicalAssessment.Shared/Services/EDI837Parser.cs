@@ -1,18 +1,17 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using SSITechnicalAssessment.Models.ClaimModel;
+using SSITechnicalAssessment.Shared.Models.ClaimModel;
 
-namespace SSITechnicalAssessment.EDIParser
+namespace SSITechnicalAssessment.Shared.Services
 {
     public class EDI837Parser
     {
         const char SegmentDelimiter = '~';
         const char ElementDelimiter = '*';
         const char CompositeElementDelimiter = ':';
-
-        Dictionary<string, List<string>> segmentGroups = new Dictionary<string, List<string>>();
         
+
         public EDI837Parser() { }
         
         public static List<Claim> ParseSegments(string textContent)
@@ -63,7 +62,7 @@ namespace SSITechnicalAssessment.EDIParser
             char ReleaseInfoIndicator = elements[9][0];
 
             Facility facility = new Facility(facilityTypeCode, facilityCodeQual, claimFreqCode);
-            Claim claim = new Claim(patientAccountNum, claimChargeAmt, facility, signatureIndicator, participationCode, benefitsAsmntCertIndicator, ReleaseInfoIndicator);
+            Claim claim = new Claim(patientAccountNum, claimChargeAmt, facility, signatureIndicator, participationCode, benefitsAsmntCertIndicator, ReleaseInfoIndicator, clm03, clm04);
 
             return claim;
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 using Xunit;
-using SSITechnicalAssessment.EDIParser;
+using SSITechnicalAssessment.Shared.Services;
 using System.Collections.Generic;
 using System.IO;
 

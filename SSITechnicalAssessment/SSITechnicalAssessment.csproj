@@ -16,4 +16,8 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SSITechnicalAssessment.Shared\SSITechnicalAssessment.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

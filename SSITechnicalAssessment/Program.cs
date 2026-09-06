@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using SSITechnicalAssessment.EDIParser;
-using SSITechnicalAssessment.Models.ClaimModel;
+using SSITechnicalAssessment.Shared.Services;
+using SSITechnicalAssessment.Shared.Models.ClaimModel;
 using SSITechnicalAssessment.Output;
 
 namespace SSITechnicalAssessment
