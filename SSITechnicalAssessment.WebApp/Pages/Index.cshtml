@@ -4,20 +4,22 @@
     ViewData["Title"] = "EDI 837 Parser";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Upload EDI 837 File Here</h1>
-    <form method="post" enctype="multipart/form-data">
-        <div class="form-group mb-3">
-            <label asp-for="UploadedEDIFile" class="edi-file-label form-label">Choose File:</label>
-            <input asp-for="UploadedEDIFile" type="file" class="edi-file-input form-control" />
-        </div>
-        @if (!string.IsNullOrEmpty(Model.Message))
-        {
-            <div class="alert alert-info mt-3">@Model.Message</div>
-        }
-        <button type="submit" class="upload-btn btn btn-primary">Upload</button>
-    </form>
-
+<div class="container text-center">
+    <div class="container-fluid m-2">
+        <h1 class="display-4">Upload EDI 837 File Here</h1>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                <label asp-for="UploadedEDIFile" class="edi-file-label form-label">Choose File:</label>
+                <input asp-for="UploadedEDIFile" type="file" accept=".837" class="edi-file-input form-control" />
+            </div>
+            @if (!string.IsNullOrEmpty(Model.Message))
+            {
+                <div class="alert alert-info mt-3">@Model.Message</div>
+            }
+            <button type="submit" class="upload-btn btn btn-primary">Upload</button>
+        </form>
+    </div>
+    
     <table class="table">
         <thead>
             <tr>
@@ -36,22 +38,22 @@
         <tbody>
             @foreach (var claim in Model.AllClaims)
             {
-            <tr>
-                <td>@claim.ClaimID</td>
-                <td>@claim.PatientAccountNum</td>
-                <td>@claim.ClaimChargeAmt.ToString("C")</td>
-                <td>@claim.Facility.FacilityTypeCode</td>
-                <td>@claim.Facility.FacilityCodeQual</td>
-                <td>@claim.Facility.ClaimFreqCode</td>
-                <td>@claim.SignatureIndicator</td>
-                <td>@claim.ParticipationCode</td>
-                <td>@claim.BenefitsAsmntCertIndicator</td>
-                <td>@claim.ReleaseInfoIndicator</td>
-            </tr>
+                <tr>
+                    <td>@claim.ClaimID</td>
+                    <td>@claim.PatientAccountNum</td>
+                    <td>@claim.ClaimChargeAmt.ToString("C")</td>
+                    <td>@claim.Facility.FacilityTypeCode</td>
+                    <td>@claim.Facility.FacilityCodeQual</td>
+                    <td>@claim.Facility.ClaimFreqCode</td>
+                    <td>@claim.SignatureIndicator</td>
+                    <td>@claim.ParticipationCode</td>
+                    <td>@claim.BenefitsAsmntCertIndicator</td>
+                    <td>@claim.ReleaseInfoIndicator</td>
+                </tr>
             }
         </tbody>
     </table>
-</div>
+    </div>
 
 @section Scripts {
     <script>
@@ -60,6 +62,9 @@
                 var fileName = $(this).val().split("\\").pop();
                 $(this).prev('.edi-file-label').html(fileName);
             });
+
+            $('.upload-btn').prop('disabled', this.files.length === 0);
         });
+
     </script>
 }

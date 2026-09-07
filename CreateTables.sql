@@ -1,0 +1,20 @@
+﻿CREATE TABLE Claims (
+	ClaimID INT IDENTITY(1,1) PRIMARY KEY,
+
+	PatientAccountNum VARCHAR(255) NOT NULL,
+	ClaimChargeAmt DECIMAL(19,4) NOT NULL,
+	SignatureIndicator CHAR NOT NULL,
+	ParticipationCode CHAR NOT NULL,
+	BenefitsAsmntCertIndicator CHAR NOT NULL,
+	ReleaseInfoIndicator CHAR NOT NULL,
+	CLM03 VARCHAR(255),
+	CLM04 VARCHAR(255)
+);
+
+CREATE TABLE Facilities (
+	ClaimID INT PRIMARY KEY REFERENCES Claims(ClaimID) ON DELETE CASCADE,
+
+	FacilityTypeCode VARCHAR(255) NOT NULL,
+	FacilityCodeQual VARCHAR(255) NOT NULL,
+	ClaimFreqCode VARCHAR(255) NOT NULL
+);

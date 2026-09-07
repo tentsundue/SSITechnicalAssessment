@@ -114,11 +114,11 @@ namespace SSITechnicalAssessment.WebApp.Data
                      c.ParticipationCode,
                      c.BenefitsAsmntCertIndicator, 
                      c.ReleaseInfoIndicator, 
-                     c.CLM03, 
-                     c.CLM04,
                      f.FacilityTypeCode, 
                      f.FacilityCodeQual, 
-                     f.ClaimFreqCode
+                     f.ClaimFreqCode,
+                     c.CLM03, 
+                     c.CLM04
                     FROM Claim AS c
                     JOIN Facility AS f
                      ON c.ClaimID = f.ClaimID
@@ -135,12 +135,13 @@ namespace SSITechnicalAssessment.WebApp.Data
                 char ParticipationCode = reader.GetString(4)[0];
                 char BenefitsAsmntCertIndicator = reader.GetString(5)[0];
                 char ReleaseInfoIndicator = reader.GetString(6)[0];
-                string? CLM03 = reader.IsDBNull(7) ? null : reader.GetString(7);
-                string? CLM04 = reader.IsDBNull(8) ? null : reader.GetString(8);
 
-                string FacilityTypeCode = reader.GetString(9);
-                char FacilityCodeQual = reader.GetString(10)[0];
-                string ClaimFreqCode = reader.GetString(11);
+                string FacilityTypeCode = reader.GetString(7);
+                char FacilityCodeQual = reader.GetString(8)[0];
+                int ClaimFreqCode = reader.GetInt32(9);
+
+                string? CLM03 = reader.IsDBNull(10) ? null : reader.GetString(10);
+                string? CLM04 = reader.IsDBNull(11) ? null : reader.GetString(11);
 
                 Facility Facility = new Facility(FacilityTypeCode, FacilityCodeQual, ClaimFreqCode);
 
@@ -155,6 +156,8 @@ namespace SSITechnicalAssessment.WebApp.Data
                     CLM03,
                     CLM04
                 );
+                int claimID = reader.GetInt32(0);
+                claim.ClaimID = claimID;
 
                 allClaims.Add(claim);
             }

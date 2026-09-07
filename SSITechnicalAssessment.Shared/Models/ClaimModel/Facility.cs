@@ -11,9 +11,9 @@ namespace SSITechnicalAssessment.Shared.Models.ClaimModel
         public int ClaimID { get; set; } // Used for the WebApp version
         public string FacilityTypeCode { get; }
         public char FacilityCodeQual { get; }
-        public string ClaimFreqCode { get; }
+        public int ClaimFreqCode { get; }
 
-        public Facility(string facilityTypeCode, char facilityCodeQual, string claimFreqCode)
+        public Facility(string facilityTypeCode, char facilityCodeQual, int claimFreqCode)
         {
             FacilityTypeCode = facilityTypeCode;
             FacilityCodeQual = facilityCodeQual;

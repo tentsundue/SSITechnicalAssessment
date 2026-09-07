@@ -24,11 +24,26 @@ namespace SSITechnicalAssessment.Tests
             Assert.Equal(25m, claim.ClaimChargeAmt);
             Assert.Equal("01", claim.Facility.FacilityTypeCode);
             Assert.Equal('B', claim.Facility.FacilityCodeQual);
-            Assert.Equal("1", claim.Facility.ClaimFreqCode);
+            Assert.Equal(1, claim.Facility.ClaimFreqCode);
             Assert.Equal('N', claim.SignatureIndicator);
             Assert.Equal('C', claim.ParticipationCode);
             Assert.Equal('Y', claim.BenefitsAsmntCertIndicator);
             Assert.Equal('Y', claim.ReleaseInfoIndicator);
+        }
+
+        [Fact]
+        public void ParseSegments_ClaimWithCLM03ANDCLM04_ShouldReturnSingleClaim()
+        {
+            string CLMSegment = "CLM*XYZ123000456*25*clm03check*clm04check*01:B:1*N*C*Y*Y~";
+
+            // Ensure there is only one claim first
+            List<Claim> claims = EDI837Parser.ParseSegments(CLMSegment);
+            Assert.Single(claims);
+
+            // Validate claim values
+            Claim claim = claims[0];
+            Assert.Equal("clm03check", claim.CLM03);
+            Assert.Equal("clm04check", claim.CLM04);
         }
 
         [Fact]

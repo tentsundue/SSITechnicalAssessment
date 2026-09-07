@@ -30,18 +30,19 @@ namespace SSITechnicalAssessment.WebApp.Pages
         public IReadOnlyList<Claim> AllClaims { get; set; } = new List<Claim>();
         public async Task OnGetAsync()
         {
+            Message = TempData["Message"] as string;
             AllClaims = await _ClaimRepository.GetAllClaimsAsync();
         }
 
         [BindProperty]
-        public IFormFile UploadedEDIFile { get; set; }
+        public IFormFile? UploadedEDIFile { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (UploadedEDIFile == null || UploadedEDIFile.Length == 0)
             {
-                Message = "Please select a file.";
-                return Page();
+                TempData["Message"] = "Please select a file.";
+                return RedirectToPage();
             }
 
             // Read file contents and parse directly
@@ -62,18 +63,18 @@ namespace SSITechnicalAssessment.WebApp.Pages
                     claimsAdded++;
                 }
 
-                Message = $"Successfully added {claimsAdded}/{totalClaims} claims";
+                TempData["Message"] = $"Successfully added {claimsAdded} claims | Skipped {claimsAdded}";
                 AllClaims = await _ClaimRepository.GetAllClaimsAsync();
 
             }
             catch (Exception e)
             {
-                Message = $"Failed to parse claims: {e.Message}";
+                TempData["Message"] = $"Failed to parse claims: {e.Message}";
                 _logger.LogError(e, "Failed to parse claims");
                 AllClaims = await _ClaimRepository.GetAllClaimsAsync();
             }
 
-            return Page();
+            return RedirectToPage();
         }
     }
 }

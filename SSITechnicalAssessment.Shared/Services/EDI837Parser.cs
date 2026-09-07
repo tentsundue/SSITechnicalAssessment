@@ -54,7 +54,7 @@ namespace SSITechnicalAssessment.Shared.Services
             string[] facilityInfo = elements[5].Split(CompositeElementDelimiter);
             string facilityTypeCode = facilityInfo[0];
             char facilityCodeQual = facilityInfo[1][0];
-            string claimFreqCode = facilityInfo[2];
+            int claimFreqCode = int.Parse(facilityInfo[2]);
 
             char signatureIndicator = elements[6][0];
             char participationCode = elements[7][0];
