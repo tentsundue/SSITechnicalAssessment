@@ -21,10 +21,15 @@ Output/..
   - Folder to hold sample .837 files.
 
 How to run in CLI/Terminal:
+1. From the root
+```
+cd SSITechnicalAssessment
+```
 
-1. From the root, `cd SSITechnicalAssessment`
-
-2. Run `dotnet run`
+2. Run 
+```
+dotnet run
+```
 
 3. Provide a file path to an .837 file (or use the sample file located in EDI837Files/SampleProfessional.837)
 
@@ -35,9 +40,15 @@ How to run in CLI/Terminal:
 This is the Unit Test Suite. It tests file paths (ParseFileTests.cs) and file parsing for CLM Segments (ParseSegmentTests.cs).
 
 How to run in CLI/Terminal:
-1. From the root, 'cd SSITechnicalAssessment.Tests'
+1. From the root
+```
+cd SSITechnicalAssessment.Tests
+```
 
-2. Run `dotnet test`
+2. Run 
+```
+dotnet test
+```
 
 3. All test case results will display
 
@@ -67,15 +78,27 @@ Users can also view all Claim information from that database in a concise table.
 How to run in CLI/Terminal:
 1. Ensure that you have a SQL Server Database instance already set up and are connected. You cannot move on without this. If not, Please see "SQL Server Database" under "Setup" below.
 
-2. From the root, `cd SSITechnicalAssessment.WebApp`
+2. From the root
+```
+cd SSITechnicalAssessment.WebApp
+```
 
-3. Run `dotnet run`
+3. Run 
+```
+dotnet run
+```
 
 4. FIRST TIME RUNNING APP: You may see a certificate error. This is because the application is serving in HTTPS. Follow the steps below to resolve the issue:
 
-	a. Generate a developer certificate -> `dotnet dev-certs https`
+	a. Generate a developer certificate: 
+	```
+	dotnet dev-certs https
+	```
 
-	b. Add the certificate to the tristed root store -> `dotnet dev-certs https --trust`
+	b. Add the certificate to the tristed root store:
+	 ```
+	 dotnet dev-certs https --trust
+	 ```
 
 5. There will be two separate urls that show up in the console prefixed by "NOW listening on: ...". Choose any one and load it in your browser (i.e. https://localhost:5001)
 
