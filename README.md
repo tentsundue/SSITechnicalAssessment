@@ -70,8 +70,8 @@ How to run in CLI/Terminal:
 
 ### Install Microsoft.Data.SQLClient
 This tool allows for us to establish a connection between our database and web application.
-To install:
-1. Right Click SSITechnicalAssessment Project and Select Manage NuGet packages
+To install via Visual Studio:
+1. Right Click the `SSITechnicalAssessment` project and Select Manage NuGet packages
 2. Search for `Microsoft.Data.SQLClient` and choose version 5.0.2 from the dropdown
 3. Hit Install
 The package should be installed now.
@@ -81,8 +81,8 @@ The package should be installed now.
 1. Create a SQL Server Instance using SSMS. Pick any Authentication Type that you like (Windows Auth, SQL Server Auth, etc.)
 2. Initialize a Database in that instance (i.e. SSITechnicalAssessmentDB)
 3. Locate the connection string to that database and copy it
-4. Go to `SSITechnicalAssessments.WebApp/appsettings.json`
-5. In appsettings.json, Paste the connection string from your database as the new "ConnectionString" value
+4. Go to `SSITechnicalAssessment.WebApp/appsettings.json`
+5. In appsettings.json, Paste the database name and connection string as the key-value pair inside "ConnectionStrings". It should look something like {"ConnectionStrings": {"db-name": "conn-string"} ...}
 	a. IF your SQL Server enforces encryption, Modify your connection string to include "TrustServerCertificate=True" -> This avoids any SQL certificate trust errors.
 	b. IF you are using SQL Server Authentication as well, Ensure that you fill in the "password=" value within your connection string (it may be '****' or something similar)
 6. Open `SSITechnicalAssessment/CreateTables.sql` in SMSS, connected to your database.
