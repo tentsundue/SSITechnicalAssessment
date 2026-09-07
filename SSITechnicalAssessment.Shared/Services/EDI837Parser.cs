@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using SSITechnicalAssessment.Shared.Models.ClaimModel;
+using SSITechnicalAssessment.Shared.Types;
 
 namespace SSITechnicalAssessment.Shared.Services
 {
@@ -78,15 +79,31 @@ namespace SSITechnicalAssessment.Shared.Services
             return total;
         }
 
-        public static List<Claim> ParseFile(string path)
+        public static void VerifyFile(string path)
         {
+            if (path.Length == 0)
+            {
+                Console.WriteLine("ERROR: File path is required. Please try again.");
+                throw new EmptyPathException("No path provided.");
+            }
+
             if (!File.Exists(path))
             {
+                Console.WriteLine("ERROR: File path does not exist! Please try again.");
                 throw new FileNotFoundException($"EDI file not found: {path}");
             }
 
-            string textContent = File.ReadAllText(path);
+            string file_ext = Path.GetExtension(path);
+            if (file_ext != ".837")
+            {
+                Console.WriteLine("ERROR: File is not .837. Please try again.");
+                throw new Not837Exception("EDI File is not .837");
+            }
+        }
 
+        public static List<Claim> ParseFile(string path)
+        {
+            string textContent = File.ReadAllText(path);
             return ParseSegments(textContent);
         }
     }

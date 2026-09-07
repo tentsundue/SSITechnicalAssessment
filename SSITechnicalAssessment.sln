@@ -7,9 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSITechnicalAssessment", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSITechnicalAssessment.Tests", "SSITechnicalAssessment.Tests\SSITechnicalAssessment.Tests.csproj", "{60666E60-ADFC-468E-AAF0-F36A1FCD48AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSITechnicalAssessment.WebApp", "SSITechnicalAssessment.WebApp\SSITechnicalAssessment.WebApp.csproj", "{C3D0DB6E-E2F4-4F39-BB77-D814B48C9B65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSITechnicalAssessment.WebApp", "SSITechnicalAssessment.WebApp\SSITechnicalAssessment.WebApp.csproj", "{C3D0DB6E-E2F4-4F39-BB77-D814B48C9B65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSITechnicalAssessment.Shared", "SSITechnicalAssessment.Shared\SSITechnicalAssessment.Shared.csproj", "{8D6898EA-EC09-4738-A6CB-8CA7D1AD5BA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSITechnicalAssessment.Shared", "SSITechnicalAssessment.Shared\SSITechnicalAssessment.Shared.csproj", "{8D6898EA-EC09-4738-A6CB-8CA7D1AD5BA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{774704A1-DEC0-45BE-BBAB-4D3D19A46DF6}"
+	ProjectSection(SolutionItems) = preProject
+		CreateTables.sql = CreateTables.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{88085446-84B2-44FF-8CD3-24DFFC9AE0C9}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

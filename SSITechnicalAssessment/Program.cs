@@ -11,21 +11,32 @@ namespace SSITechnicalAssessment
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter the path to the EDI 837 file:");
-            string path = Console.ReadLine() ?? "";
-            if (path.Length == 0)
+            while (true)
             {
-                Console.WriteLine("ERROR: File path is required. Please try again.");
-                return;
+                Console.WriteLine("\nEnter the path to the EDI 837 file (Q to exit):");
+                string path = Console.ReadLine() ?? "";
+
+                if (string.Equals(path.ToLower(), "q"))
+                {
+                    Environment.Exit(0);
+                }
+
+                try
+                {
+                    EDI837Parser.VerifyFile(path);
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
+
+                Console.WriteLine($"Parsing file: {path}\n");
+
+                List<Claim> retrievedClaims = EDI837Parser.ParseFile(path);
+                decimal totalChargeAmtAllClaims = EDI837Parser.GetTotalChargeAmtAllClaims(retrievedClaims);
+
+                OutputWriter.Display(retrievedClaims, totalChargeAmtAllClaims);
             }
-
-            Console.WriteLine($"Parsing file: {path}\n");
-
-            List<Claim> retrievedClaims = EDI837Parser.ParseFile(path);
-            decimal totalChargeAmtAllClaims = EDI837Parser.GetTotalChargeAmtAllClaims(retrievedClaims); 
-
-            OutputWriter.Display(retrievedClaims, totalChargeAmtAllClaims);
-
         }
     }
 }
