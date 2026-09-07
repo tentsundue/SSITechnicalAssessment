@@ -106,7 +106,7 @@ The package should be installed now.
 3. Locate the connection string to that database and copy it
 
 4. Go to `SSITechnicalAssessment.WebApp/appsettings.json`
-5. In appsettings.json, Paste the database name and connection string as the key-value pair inside "ConnectionStrings". It should look something like {"ConnectionStrings": {"db-name": "conn-string"} ...}
+5. In appsettings.json, Paste the database name and connection string as the key-value pair inside "ConnectionStrings". It should look something like `{"ConnectionStrings": {"db-name": "conn-string"} ...}`
 	
 	a. IF your SQL Server enforces encryption, Modify your connection string to include "TrustServerCertificate=True" -> This avoids any SQL certificate trust errors.
 	
