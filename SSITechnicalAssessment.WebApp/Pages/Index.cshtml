@@ -14,9 +14,9 @@
             </div>
             @if (!string.IsNullOrEmpty(Model.Message))
             {
-                <div class="alert alert-info mt-3">@Model.Message</div>
+                <div class="alert alert-info mt-3 ">@Model.Message</div>
             }
-            <button type="submit" class="upload-btn btn btn-primary">Upload</button>
+            <button type="submit" class="upload-btn btn btn-primary" disabled>Upload</button>
         </form>
     </div>
     
@@ -61,9 +61,11 @@
             $('.edi-file-input').on("change", function () {
                 var fileName = $(this).val().split("\\").pop();
                 $(this).prev('.edi-file-label').html(fileName);
+
+                $('.upload-btn').prop('disabled', this.files.length === 0);
             });
 
-            $('.upload-btn').prop('disabled', this.files.length === 0);
+            
         });
 
     </script>

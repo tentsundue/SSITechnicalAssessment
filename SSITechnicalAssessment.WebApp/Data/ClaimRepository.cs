@@ -94,7 +94,7 @@ namespace SSITechnicalAssessment.WebApp.Data
             {
                 Console.WriteLine($"ERROR: {e}");
                 await transaction.RollbackAsync();
-                throw;
+                return 0;
             }
         }
 
@@ -124,44 +124,51 @@ namespace SSITechnicalAssessment.WebApp.Data
                      ON c.ClaimID = f.ClaimID
                     ORDER BY c.ClaimID ASC;";
 
-            await using SqlCommand cmd = new SqlCommand(getAllClaimsQuery, conn);
-
-            await using var reader = await cmd.ExecuteReaderAsync();
-            while (await reader.ReadAsync())
+            try
             {
-                string PatientAccountNum = reader.GetString(1);
-                decimal ClaimChargeAmt = reader.GetDecimal(2);
-                char SignatureIndicator = reader.GetString(3)[0];
-                char ParticipationCode = reader.GetString(4)[0];
-                char BenefitsAsmntCertIndicator = reader.GetString(5)[0];
-                char ReleaseInfoIndicator = reader.GetString(6)[0];
+                await using SqlCommand cmd = new SqlCommand(getAllClaimsQuery, conn);
 
-                string FacilityTypeCode = reader.GetString(7);
-                char FacilityCodeQual = reader.GetString(8)[0];
-                int ClaimFreqCode = reader.GetInt32(9);
+                await using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    string PatientAccountNum = reader.GetString(1);
+                    decimal ClaimChargeAmt = reader.GetDecimal(2);
+                    char SignatureIndicator = reader.GetString(3)[0];
+                    char ParticipationCode = reader.GetString(4)[0];
+                    char BenefitsAsmntCertIndicator = reader.GetString(5)[0];
+                    char ReleaseInfoIndicator = reader.GetString(6)[0];
 
-                string? CLM03 = reader.IsDBNull(10) ? null : reader.GetString(10);
-                string? CLM04 = reader.IsDBNull(11) ? null : reader.GetString(11);
+                    string FacilityTypeCode = reader.GetString(7);
+                    char FacilityCodeQual = reader.GetString(8)[0];
+                    int ClaimFreqCode = reader.GetInt32(9);
 
-                Facility Facility = new Facility(FacilityTypeCode, FacilityCodeQual, ClaimFreqCode);
+                    string? CLM03 = reader.IsDBNull(10) ? null : reader.GetString(10);
+                    string? CLM04 = reader.IsDBNull(11) ? null : reader.GetString(11);
 
-                Claim claim = new Claim(
-                    PatientAccountNum,
-                    ClaimChargeAmt,
-                    Facility,
-                    SignatureIndicator,
-                    ParticipationCode,
-                    BenefitsAsmntCertIndicator,
-                    ReleaseInfoIndicator,
-                    CLM03,
-                    CLM04
-                );
-                int claimID = reader.GetInt32(0);
-                claim.ClaimID = claimID;
+                    Facility Facility = new Facility(FacilityTypeCode, FacilityCodeQual, ClaimFreqCode);
 
-                allClaims.Add(claim);
+                    Claim claim = new Claim(
+                        PatientAccountNum,
+                        ClaimChargeAmt,
+                        Facility,
+                        SignatureIndicator,
+                        ParticipationCode,
+                        BenefitsAsmntCertIndicator,
+                        ReleaseInfoIndicator,
+                        CLM03,
+                        CLM04
+                    );
+                    int claimID = reader.GetInt32(0);
+                    claim.ClaimID = claimID;
+
+                    allClaims.Add(claim);
+                }
             }
-
+            catch (Exception e)
+            {
+                Console.WriteLine($"ERROR: {e}");
+            }
+            
             return allClaims;
         }
     }

@@ -60,10 +60,13 @@ namespace SSITechnicalAssessment.WebApp.Pages
                 foreach (Claim claim in claims)
                 {
                     int newClaimID = await _ClaimRepository.PostClaimAsync(claim);
-                    claimsAdded++;
+                    if (newClaimID != 0)
+                    {
+                        claimsAdded++;
+                    }
                 }
 
-                TempData["Message"] = $"Successfully added {claimsAdded} claims | Skipped {claimsAdded}";
+                TempData["Message"] = $"Successfully added {claimsAdded} out of {totalClaims} claims!";
                 AllClaims = await _ClaimRepository.GetAllClaimsAsync();
 
             }
